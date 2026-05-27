@@ -31,45 +31,45 @@
     overflow-x: hidden;
   }
 
-  /* ─── NOISE TEXTURE OVERLAY ─── */
-  body::before {
-    content: '';
-    position: fixed;
-    inset: 0;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.035'/%3E%3C/svg%3E");
-    pointer-events: none;
-    z-index: 9999;
-    opacity: 0.4;
-  }
-
   /* ─── NAV ─── */
   nav {
     position: fixed; top:0; left:0; right:0; z-index: 500;
-    padding: 22px 56px;
+    padding: 18px 24px;
     display: flex; justify-content: space-between; align-items: center;
-    background: linear-gradient(to bottom, rgba(8,8,8,0.97) 0%, transparent 100%);
-    backdrop-filter: blur(2px);
+    background: rgba(8,8,8,0.97);
+    border-bottom: 1px solid var(--border);
   }
 
-  .nav-brand {
-    display: flex; flex-direction: column; line-height: 1;
-  }
+  .nav-brand { display: flex; flex-direction: column; line-height: 1; }
 
   .nav-name {
     font-family: 'Bebas Neue', sans-serif;
-    font-size: 26px; letter-spacing: 5px; color: var(--white);
+    font-size: 24px; letter-spacing: 5px; color: var(--white);
   }
   .nav-name span { color: var(--orange); }
 
   .nav-sub {
     font-family: 'Rajdhani', sans-serif;
     font-size: 9px; font-weight: 600;
-    letter-spacing: 3.5px; text-transform: uppercase;
+    letter-spacing: 3px; text-transform: uppercase;
     color: var(--muted); margin-top: 2px;
   }
 
-  .nav-links { display: flex; gap: 40px; list-style: none; }
+  /* Hamburger */
+  .nav-toggle {
+    display: none;
+    flex-direction: column; gap: 5px;
+    cursor: pointer; padding: 4px;
+    background: none; border: none;
+  }
+  .nav-toggle span {
+    display: block; width: 24px; height: 2px;
+    background: var(--chrome); transition: all 0.3s;
+  }
 
+  .nav-links {
+    display: flex; gap: 32px; list-style: none;
+  }
   .nav-links a {
     font-family: 'Rajdhani', sans-serif;
     font-size: 13px; font-weight: 600;
@@ -79,126 +79,117 @@
   }
   .nav-links a:hover { color: var(--orange); }
 
+  /* Mobile nav drawer */
+  .nav-drawer {
+    display: none;
+    position: fixed; top: 61px; left: 0; right: 0;
+    background: rgba(8,8,8,0.98);
+    border-bottom: 1px solid var(--border);
+    z-index: 499; padding: 24px;
+    flex-direction: column; gap: 0;
+  }
+  .nav-drawer.open { display: flex; }
+  .nav-drawer a {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 18px; font-weight: 600;
+    letter-spacing: 2px; text-transform: uppercase;
+    color: var(--light); text-decoration: none;
+    padding: 16px 0;
+    border-bottom: 1px solid var(--border);
+    display: block;
+  }
+  .nav-drawer a:last-child { border-bottom: none; }
+
   /* ─── HERO ─── */
   .hero {
     min-height: 100vh;
-    display: grid;
-    grid-template-rows: 1fr auto;
-    padding: 0 56px 72px;
+    display: flex; flex-direction: column;
+    justify-content: flex-end;
+    padding: 100px 24px 56px;
     position: relative; overflow: hidden;
     background: var(--black);
   }
 
-  /* diagonal grid lines */
   .hero::before {
     content: '';
     position: absolute; inset: 0;
-    background:
-      repeating-linear-gradient(
-        -55deg,
-        transparent, transparent 120px,
-        rgba(255,255,255,0.012) 120px, rgba(255,255,255,0.012) 121px
-      );
+    background: repeating-linear-gradient(
+      -55deg, transparent, transparent 120px,
+      rgba(255,255,255,0.012) 120px, rgba(255,255,255,0.012) 121px
+    );
     pointer-events: none;
   }
 
-  /* orange glow bottom right */
   .hero::after {
     content: '';
-    position: absolute;
-    bottom: -100px; right: -100px;
-    width: 600px; height: 600px;
+    position: absolute; bottom: -100px; right: -100px;
+    width: 400px; height: 400px;
     background: radial-gradient(circle, rgba(212,98,10,0.12) 0%, transparent 70%);
     pointer-events: none;
   }
 
-  .hero-content {
-    display: flex; flex-direction: column;
-    justify-content: flex-end;
-    padding-bottom: 0;
-    position: relative; z-index: 1;
-    padding-top: 160px;
-  }
+  .hero-content { position: relative; z-index: 1; }
 
   .hero-eyebrow {
     font-family: 'Rajdhani', sans-serif;
     font-size: 11px; font-weight: 600;
-    letter-spacing: 5px; text-transform: uppercase;
-    color: var(--orange); margin-bottom: 28px;
+    letter-spacing: 4px; text-transform: uppercase;
+    color: var(--orange); margin-bottom: 20px;
+    display: flex; align-items: center; gap: 12px;
+    flex-wrap: wrap;
     opacity: 0; animation: fadeUp 0.7s 0.2s forwards;
-    display: flex; align-items: center; gap: 16px;
   }
-
   .hero-eyebrow::before {
     content: ''; display: block;
-    width: 40px; height: 1px;
-    background: var(--orange);
+    width: 32px; height: 1px; background: var(--orange);
+    flex-shrink: 0;
   }
 
   .hero-h1 {
     font-family: 'Bebas Neue', sans-serif;
-    font-size: clamp(72px, 11vw, 160px);
-    line-height: 0.88; letter-spacing: 2px;
-    color: var(--white);
+    font-size: clamp(60px, 16vw, 160px);
+    line-height: 0.88; letter-spacing: 2px; color: var(--white);
     opacity: 0; animation: fadeUp 0.7s 0.35s forwards;
   }
-
   .hero-h1 .orange { color: var(--orange); }
-  .hero-h1 .chrome {
-    -webkit-text-stroke: 1px var(--chrome);
-    color: transparent;
-  }
-
-  .hero-descriptor {
-    margin-top: 36px;
-    display: flex; gap: 40px; align-items: flex-start;
-    opacity: 0; animation: fadeUp 0.7s 0.5s forwards;
-  }
-
-  .hero-divider {
-    width: 1px; background: var(--border);
-    align-self: stretch; flex-shrink: 0;
-  }
+  .hero-h1 .chrome { -webkit-text-stroke: 1px var(--chrome); color: transparent; }
 
   .hero-tagline {
+    margin-top: 28px;
     font-family: 'Rajdhani', sans-serif;
-    font-size: 18px; font-weight: 500;
-    letter-spacing: 1px; color: var(--chrome);
-    line-height: 1.5; max-width: 460px;
+    font-size: clamp(15px, 3.5vw, 18px); font-weight: 500;
+    letter-spacing: 0.5px; color: var(--chrome);
+    line-height: 1.6; max-width: 540px;
+    opacity: 0; animation: fadeUp 0.7s 0.5s forwards;
   }
-
-  .hero-tagline strong {
-    color: var(--light); font-weight: 600;
-  }
+  .hero-tagline strong { color: var(--light); font-weight: 600; }
 
   .hero-pills {
-    display: flex; gap: 8px; flex-wrap: wrap; margin-top: 28px;
-    opacity: 0; animation: fadeUp 0.7s 0.65s forwards;
+    display: flex; gap: 8px; flex-wrap: wrap; margin-top: 24px;
+    opacity: 0; animation: fadeUp 0.7s 0.62s forwards;
   }
-
   .pill {
     font-family: 'Rajdhani', sans-serif;
-    font-size: 11px; font-weight: 600;
-    letter-spacing: 2.5px; text-transform: uppercase;
-    padding: 8px 18px;
-    border: 1px solid var(--border);
-    color: var(--muted);
+    font-size: 10px; font-weight: 600;
+    letter-spacing: 2px; text-transform: uppercase;
+    padding: 7px 14px; border: 1px solid var(--border); color: var(--muted);
   }
 
   .hero-cta {
-    margin-top: 52px; display: flex; gap: 16px; align-items: center;
-    opacity: 0; animation: fadeUp 0.7s 0.8s forwards;
+    margin-top: 40px; display: flex; gap: 12px;
+    flex-wrap: wrap;
+    opacity: 0; animation: fadeUp 0.7s 0.75s forwards;
   }
 
   .btn-primary {
     font-family: 'Rajdhani', sans-serif;
     font-size: 12px; font-weight: 700;
     letter-spacing: 3px; text-transform: uppercase;
-    padding: 17px 44px;
+    padding: 16px 36px;
     background: var(--orange); color: var(--white);
     border: none; cursor: pointer; text-decoration: none;
     display: inline-block;
-    clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px));
+    clip-path: polygon(0 0, calc(100% - 8px) 0, 100% 8px, 100% 100%, 8px 100%, 0 calc(100% - 8px));
     transition: background 0.2s;
   }
   .btn-primary:hover { background: var(--orange2); }
@@ -207,7 +198,7 @@
     font-family: 'Rajdhani', sans-serif;
     font-size: 12px; font-weight: 600;
     letter-spacing: 3px; text-transform: uppercase;
-    padding: 17px 44px;
+    padding: 16px 36px;
     background: transparent; color: var(--chrome);
     border: 1px solid var(--border);
     cursor: pointer; text-decoration: none; display: inline-block;
@@ -217,57 +208,56 @@
 
   /* ─── TICKER ─── */
   .ticker {
-    background: var(--orange);
-    padding: 14px 0;
+    background: var(--orange); padding: 12px 0;
     overflow: hidden; white-space: nowrap;
   }
-
   .ticker-inner {
-    display: inline-flex; gap: 0;
+    display: inline-flex;
     animation: ticker 30s linear infinite;
   }
-
   .ticker-item {
     font-family: 'Rajdhani', sans-serif;
     font-size: 11px; font-weight: 700;
     letter-spacing: 3px; text-transform: uppercase;
-    color: var(--white); padding: 0 40px;
+    color: var(--white); padding: 0 32px;
   }
-
-  .ticker-dot {
-    color: rgba(255,255,255,0.4); padding: 0;
-  }
-
+  .ticker-sep { color: rgba(255,255,255,0.4); padding: 0; }
   @keyframes ticker {
     from { transform: translateX(0); }
     to { transform: translateX(-50%); }
   }
 
-  /* ─── MISSION ─── */
-  .mission {
-    padding: 120px 56px;
-    display: grid;
-    grid-template-columns: 5fr 4fr;
-    gap: 100px; align-items: center;
-    border-bottom: 1px solid var(--border);
-  }
-
+  /* ─── SHARED SECTION STYLES ─── */
   .section-label {
     font-family: 'Rajdhani', sans-serif;
     font-size: 10px; font-weight: 700;
     letter-spacing: 4px; text-transform: uppercase;
-    color: var(--orange); margin-bottom: 24px;
+    color: var(--orange); margin-bottom: 20px;
     display: flex; align-items: center; gap: 12px;
   }
   .section-label::after {
-    content: ''; flex: 1; height: 1px;
-    background: var(--border); max-width: 60px;
+    content: ''; height: 1px; background: var(--border);
+    width: 48px;
+  }
+
+  .section-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(40px, 8vw, 80px);
+    line-height: 0.92; letter-spacing: 1px; color: var(--white);
+  }
+  .section-title .orange { color: var(--orange); }
+
+  /* ─── MISSION ─── */
+  .mission {
+    padding: 80px 24px;
+    border-bottom: 1px solid var(--border);
   }
 
   .mission-statement {
     font-family: 'Bebas Neue', sans-serif;
-    font-size: clamp(38px, 4.5vw, 62px);
+    font-size: clamp(34px, 7vw, 62px);
     line-height: 1.0; letter-spacing: 1px; color: var(--white);
+    margin-bottom: 36px;
   }
   .mission-statement .orange { color: var(--orange); }
 
@@ -281,112 +271,79 @@
 
   /* ─── STAT BAR ─── */
   .stat-bar {
-    display: grid; grid-template-columns: repeat(4, 1fr);
+    display: grid; grid-template-columns: repeat(2, 1fr);
     border-top: 1px solid var(--border);
     border-bottom: 1px solid var(--border);
     background: var(--dark);
   }
 
   .stat-item {
-    padding: 52px 40px;
+    padding: 36px 28px;
     border-right: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
     position: relative; overflow: hidden;
     transition: background 0.3s;
   }
-  .stat-item:last-child { border-right: none; }
-  .stat-item:hover { background: var(--steel); }
-
-  .stat-item::before {
-    content: '';
-    position: absolute; top: 0; left: 0;
-    width: 0; height: 3px;
-    background: var(--orange);
-    transition: width 0.4s;
-  }
-  .stat-item:hover::before { width: 100%; }
+  .stat-item:nth-child(2) { border-right: none; }
+  .stat-item:nth-child(3) { border-bottom: none; }
+  .stat-item:nth-child(4) { border-right: none; border-bottom: none; }
 
   .stat-number {
     font-family: 'Bebas Neue', sans-serif;
-    font-size: 58px; line-height: 1;
+    font-size: 52px; line-height: 1;
     color: var(--orange); letter-spacing: 1px;
   }
-
   .stat-label {
     font-family: 'Rajdhani', sans-serif;
     font-size: 11px; font-weight: 600;
     letter-spacing: 2px; text-transform: uppercase;
-    color: var(--muted); margin-top: 10px;
+    color: var(--muted); margin-top: 8px;
   }
 
   /* ─── SERVICES ─── */
-  .services {
-    padding: 120px 56px;
-  }
-
-  .services-header {
-    display: grid; grid-template-columns: 1fr 1fr;
-    gap: 80px; margin-bottom: 72px; align-items: end;
-  }
-
-  .section-title {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: clamp(44px, 5.5vw, 80px);
-    line-height: 0.92; letter-spacing: 1px; color: var(--white);
-  }
-  .section-title .orange { color: var(--orange); }
+  .services { padding: 80px 24px; }
 
   .services-intro {
     font-size: 15px; line-height: 1.85;
     color: var(--muted); font-weight: 300;
     border-left: 2px solid var(--orange);
-    padding-left: 24px;
+    padding-left: 20px; margin: 32px 0 56px;
   }
 
   .services-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    display: grid; grid-template-columns: 1fr;
     gap: 2px;
   }
 
   .service-card {
     background: var(--steel);
-    padding: 44px 40px;
+    padding: 32px 28px;
     position: relative; overflow: hidden;
     transition: background 0.25s;
-    display: grid;
-    grid-template-columns: auto 1fr;
-    gap: 28px;
-    align-items: start;
+    display: grid; grid-template-columns: 48px 1fr;
+    gap: 20px; align-items: start;
   }
   .service-card:hover { background: var(--mid); }
-
   .service-card::after {
-    content: '';
-    position: absolute; bottom: 0; left: 0;
-    width: 0; height: 2px;
-    background: var(--orange);
+    content: ''; position: absolute; bottom: 0; left: 0;
+    width: 0; height: 2px; background: var(--orange);
     transition: width 0.35s;
   }
   .service-card:hover::after { width: 100%; }
 
   .service-num {
     font-family: 'Bebas Neue', sans-serif;
-    font-size: 48px; line-height: 1;
-    color: rgba(212,98,10,0.2);
-    transition: color 0.25s;
-    padding-top: 4px;
+    font-size: 40px; line-height: 1;
+    color: rgba(212,98,10,0.25); padding-top: 2px;
   }
-  .service-card:hover .service-num { color: rgba(212,98,10,0.4); }
-
-  .service-content {}
 
   .service-title {
     font-family: 'Rajdhani', sans-serif;
-    font-size: 17px; font-weight: 700;
-    letter-spacing: 1px; text-transform: uppercase;
-    color: var(--white); margin-bottom: 12px;
+    font-size: 16px; font-weight: 700;
+    letter-spacing: 0.5px; text-transform: uppercase;
+    color: var(--white); margin-bottom: 10px;
+    line-height: 1.3;
   }
-
   .service-desc {
     font-size: 14px; line-height: 1.8;
     color: var(--muted); font-weight: 300;
@@ -394,23 +351,17 @@
 
   /* ─── ABOUT ─── */
   .about {
-    padding: 120px 56px;
+    padding: 80px 24px;
     background: var(--dark);
     border-top: 1px solid var(--border);
     border-bottom: 1px solid var(--border);
   }
 
-  .about-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 100px; align-items: start;
-  }
-
   .about-headline {
     font-family: 'Bebas Neue', sans-serif;
-    font-size: clamp(40px, 4.5vw, 64px);
+    font-size: clamp(40px, 8vw, 64px);
     line-height: 0.95; letter-spacing: 1px;
-    color: var(--white); margin-bottom: 36px;
+    color: var(--white); margin-bottom: 28px;
   }
   .about-headline .orange { color: var(--orange); }
 
@@ -418,128 +369,105 @@
     font-size: 15px; line-height: 1.9;
     color: var(--muted); font-weight: 300;
   }
-  .about-body p { margin-bottom: 20px; }
+  .about-body p { margin-bottom: 18px; }
   .about-body p:last-child { margin-bottom: 0; }
   .about-body strong { color: var(--light); font-weight: 500; }
 
   .about-badge {
-    margin-top: 40px;
-    display: inline-flex; align-items: center; gap: 14px;
-    padding: 16px 24px;
+    margin-top: 32px;
+    display: inline-flex; align-items: center; gap: 12px;
+    padding: 14px 20px;
     border: 1px solid var(--border);
     background: var(--steel);
   }
-
   .about-badge-dot {
     width: 8px; height: 8px; border-radius: 50%;
     background: var(--orange); flex-shrink: 0;
   }
-
   .about-badge-text {
     font-family: 'Rajdhani', sans-serif;
     font-size: 11px; font-weight: 600;
-    letter-spacing: 2.5px; text-transform: uppercase;
-    color: var(--chrome);
+    letter-spacing: 2px; text-transform: uppercase;
+    color: var(--chrome); line-height: 1.5;
   }
 
-  /* Career track */
+  /* Career */
+  .career-section { margin-top: 64px; }
   .career-label {
     font-family: 'Rajdhani', sans-serif;
     font-size: 10px; font-weight: 700;
     letter-spacing: 4px; text-transform: uppercase;
-    color: var(--orange); margin-bottom: 32px;
+    color: var(--orange); margin-bottom: 28px;
   }
 
   .career-list { display: flex; flex-direction: column; }
 
   .career-item {
-    display: grid;
-    grid-template-columns: 16px 1fr;
-    gap: 20px;
-    padding: 20px 0;
+    display: grid; grid-template-columns: 20px 1fr;
+    gap: 16px; padding: 18px 0;
     border-bottom: 1px solid var(--border);
-    position: relative;
   }
   .career-item:first-child { border-top: 1px solid var(--border); }
 
   .career-dot-wrap {
     display: flex; flex-direction: column;
-    align-items: center; padding-top: 6px;
+    align-items: center; padding-top: 5px;
   }
-
   .c-dot {
     width: 8px; height: 8px; border-radius: 50%;
     background: var(--orange); flex-shrink: 0;
   }
-
   .c-line {
-    width: 1px; flex: 1; margin-top: 8px;
+    width: 1px; flex: 1; margin-top: 6px;
     background: linear-gradient(to bottom, rgba(212,98,10,0.4), transparent);
   }
-
   .career-item:last-child .c-line { display: none; }
 
   .career-role {
     font-family: 'Rajdhani', sans-serif;
-    font-size: 15px; font-weight: 700;
+    font-size: 14px; font-weight: 700;
     letter-spacing: 0.5px; text-transform: uppercase;
-    color: var(--white); margin-bottom: 4px;
+    color: var(--white); margin-bottom: 3px;
   }
-
   .career-detail {
     font-size: 13px; color: var(--muted);
     font-weight: 300; line-height: 1.5;
   }
-
   .career-item.current .career-role { color: var(--orange); }
 
   /* ─── PROJECTS ─── */
-  .projects {
-    padding: 120px 56px;
-  }
-
-  .projects-header {
-    margin-bottom: 64px;
-  }
+  .projects { padding: 80px 24px; }
 
   .projects-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 2px;
+    display: grid; grid-template-columns: 1fr;
+    gap: 2px; margin-top: 48px;
   }
 
   .project-card {
-    background: var(--steel);
-    padding: 36px 32px;
+    background: var(--steel); padding: 28px 24px;
     position: relative; overflow: hidden;
     transition: background 0.25s;
   }
   .project-card:hover { background: var(--mid); }
-
   .project-card::before {
-    content: '';
-    position: absolute; top: 0; left: 0;
-    width: 3px; height: 0;
-    background: var(--orange);
+    content: ''; position: absolute; top: 0; left: 0;
+    width: 3px; height: 0; background: var(--orange);
     transition: height 0.3s;
   }
   .project-card:hover::before { height: 100%; }
 
+  .project-type {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 10px; font-weight: 600;
+    letter-spacing: 2px; text-transform: uppercase;
+    color: var(--orange); margin-bottom: 8px;
+  }
   .project-name {
     font-family: 'Rajdhani', sans-serif;
     font-size: 16px; font-weight: 700;
-    letter-spacing: 0.5px; text-transform: uppercase;
-    color: var(--white); margin-bottom: 8px;
-    line-height: 1.3;
+    text-transform: uppercase; color: var(--white);
+    margin-bottom: 10px; line-height: 1.3;
   }
-
-  .project-type {
-    font-family: 'Rajdhani', sans-serif;
-    font-size: 11px; font-weight: 600;
-    letter-spacing: 2px; text-transform: uppercase;
-    color: var(--orange); margin-bottom: 14px;
-  }
-
   .project-desc {
     font-size: 13px; line-height: 1.75;
     color: var(--muted); font-weight: 300;
@@ -547,104 +475,84 @@
 
   /* ─── PULLQUOTE ─── */
   .pullquote {
-    padding: 100px 56px;
+    padding: 80px 24px;
     background: var(--steel);
     border-top: 1px solid var(--border);
     border-bottom: 1px solid var(--border);
-    position: relative; overflow: hidden;
     text-align: center;
+    position: relative; overflow: hidden;
   }
-
   .pullquote::before {
     content: '"';
-    position: absolute; top: -40px; left: 50%;
+    position: absolute; top: -60px; left: 50%;
     transform: translateX(-50%);
     font-family: 'Bebas Neue', sans-serif;
-    font-size: 400px; line-height: 1;
+    font-size: 280px; line-height: 1;
     color: rgba(255,255,255,0.015);
     pointer-events: none;
   }
-
   .pullquote-text {
     font-family: 'Bebas Neue', sans-serif;
-    font-size: clamp(28px, 4vw, 60px);
-    line-height: 1.1; color: var(--white);
-    max-width: 880px; margin: 0 auto 28px;
+    font-size: clamp(26px, 6vw, 60px);
+    line-height: 1.15; color: var(--white);
+    max-width: 820px; margin: 0 auto 24px;
     position: relative; z-index: 1;
   }
   .pullquote-text .orange { color: var(--orange); }
-
   .pullquote-attr {
     font-family: 'Rajdhani', sans-serif;
     font-size: 11px; font-weight: 600;
-    letter-spacing: 4px; text-transform: uppercase;
-    color: var(--muted);
-    position: relative; z-index: 1;
+    letter-spacing: 3px; text-transform: uppercase;
+    color: var(--muted); position: relative; z-index: 1;
   }
 
   /* ─── CONTACT ─── */
-  .contact {
-    padding: 120px 56px;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 100px; align-items: start;
-  }
+  .contact { padding: 80px 24px; }
 
   .contact-headline {
     font-family: 'Bebas Neue', sans-serif;
-    font-size: clamp(44px, 5vw, 72px);
+    font-size: clamp(44px, 10vw, 72px);
     line-height: 0.95; letter-spacing: 1px;
-    color: var(--white); margin-bottom: 24px;
+    color: var(--white); margin-bottom: 20px;
   }
   .contact-headline .orange { color: var(--orange); }
 
   .contact-sub {
     font-size: 15px; line-height: 1.85;
-    color: var(--muted); font-weight: 300;
-    margin-bottom: 48px;
+    color: var(--muted); font-weight: 300; margin-bottom: 40px;
   }
 
   .contact-tags {
-    display: flex; flex-direction: column; gap: 16px;
+    display: flex; flex-direction: column; gap: 14px;
+    margin-bottom: 56px;
   }
-
-  .contact-tag {
-    display: flex; gap: 16px; align-items: center;
-  }
-
+  .contact-tag { display: flex; gap: 16px; align-items: flex-start; flex-wrap: wrap; }
   .contact-tag-label {
     font-family: 'Rajdhani', sans-serif;
     font-size: 10px; font-weight: 700;
     letter-spacing: 3px; text-transform: uppercase;
-    color: var(--orange); min-width: 110px;
+    color: var(--orange); min-width: 100px; padding-top: 2px;
   }
+  .contact-tag-value { font-size: 14px; color: var(--light); font-weight: 300; }
 
-  .contact-tag-value {
-    font-size: 14px; color: var(--light); font-weight: 300;
-  }
-
-  .form { display: flex; flex-direction: column; gap: 14px; }
-
-  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .form { display: flex; flex-direction: column; gap: 12px; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
 
   .form-input {
     background: var(--steel);
     border: 1px solid var(--border);
     border-bottom: 1px solid rgba(212,98,10,0.3);
-    padding: 15px 20px;
+    padding: 14px 18px;
     color: var(--light);
     font-family: 'Barlow', sans-serif;
     font-size: 14px; font-weight: 300;
     outline: none; width: 100%;
     transition: border-color 0.2s, background 0.2s;
+    -webkit-appearance: none;
   }
-  .form-input:focus {
-    border-color: var(--orange);
-    background: var(--mid);
-  }
+  .form-input:focus { border-color: var(--orange); background: var(--mid); }
   .form-input::placeholder { color: var(--muted); }
-
-  textarea.form-input { resize: none; height: 130px; }
+  textarea.form-input { resize: none; height: 120px; }
 
   .form-note {
     font-size: 12px; color: var(--muted);
@@ -653,59 +561,92 @@
 
   /* ─── FOOTER ─── */
   footer {
-    padding: 36px 56px;
+    padding: 32px 24px;
     border-top: 1px solid var(--border);
-    display: grid;
-    grid-template-columns: 1fr auto 1fr;
-    align-items: center;
-    gap: 24px;
+    display: flex; flex-direction: column;
+    gap: 12px; align-items: center; text-align: center;
   }
-
   .footer-brand {
     font-family: 'Bebas Neue', sans-serif;
-    font-size: 20px; letter-spacing: 5px; color: var(--white);
+    font-size: 22px; letter-spacing: 5px; color: var(--white);
   }
   .footer-brand span { color: var(--orange); }
-
   .footer-center {
     font-family: 'Rajdhani', sans-serif;
     font-size: 10px; font-weight: 600;
-    letter-spacing: 2.5px; text-transform: uppercase;
-    color: var(--muted); text-align: center;
+    letter-spacing: 2px; text-transform: uppercase;
+    color: var(--muted);
   }
-
   .footer-right {
     font-family: 'Rajdhani', sans-serif;
     font-size: 10px; font-weight: 600;
     letter-spacing: 2px; text-transform: uppercase;
-    color: var(--orange); text-align: right;
-    line-height: 1.7;
+    color: var(--orange); line-height: 1.7;
   }
 
   /* ─── ANIMATIONS ─── */
   @keyframes fadeUp {
-    from { opacity:0; transform: translateY(24px); }
+    from { opacity:0; transform: translateY(20px); }
     to   { opacity:1; transform: translateY(0); }
   }
 
-  /* ─── RESPONSIVE ─── */
-  @media (max-width: 960px) {
-    nav { padding: 20px 24px; }
+  /* ─── TABLET & DESKTOP ─── */
+  @media (min-width: 640px) {
+    .services-grid { grid-template-columns: repeat(2, 1fr); }
+    .projects-grid { grid-template-columns: repeat(2, 1fr); }
+    .stat-bar { grid-template-columns: repeat(4, 1fr); }
+    .stat-item { border-bottom: none; }
+    .stat-item:nth-child(2) { border-right: 1px solid var(--border); }
+    .stat-item:nth-child(4) { border-right: none; }
+  }
+
+  @media (min-width: 900px) {
+    nav { padding: 20px 56px; }
+    .nav-toggle { display: none !important; }
+    .nav-links { display: flex !important; }
+
+    .hero { padding: 120px 56px 80px; }
+
+    .mission {
+      padding: 120px 56px;
+      display: grid; grid-template-columns: 5fr 4fr;
+      gap: 100px; align-items: center;
+    }
+    .mission-statement { margin-bottom: 0; }
+
+    .services { padding: 120px 56px; }
+    .services-intro { margin: 32px 0 64px; }
+
+    .about { padding: 120px 56px; }
+    .about-grid {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 100px; align-items: start;
+    }
+    .career-section { margin-top: 0; }
+
+    .projects { padding: 120px 56px; }
+    .projects-grid { grid-template-columns: repeat(3, 1fr); }
+
+    .pullquote { padding: 100px 56px; }
+
+    .contact {
+      padding: 120px 56px;
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 100px; align-items: start;
+    }
+    .contact-tags { margin-bottom: 0; }
+
+    footer {
+      flex-direction: row; justify-content: space-between;
+      padding: 36px 56px; text-align: left;
+    }
+    .footer-right { text-align: right; }
+  }
+
+  /* ─── MOBILE NAV ─── */
+  @media (max-width: 899px) {
+    .nav-toggle { display: flex; }
     .nav-links { display: none; }
-    .hero { padding: 0 24px 56px; }
-    .hero-descriptor { flex-direction: column; gap: 20px; }
-    .hero-divider { display: none; }
-    .mission, .about-grid, .contact, .services-header {
-      grid-template-columns: 1fr; gap: 48px;
-    }
-    .mission, .services, .about, .projects, .pullquote, .contact {
-      padding: 80px 24px;
-    }
-    .stat-bar { grid-template-columns: repeat(2, 1fr); }
-    .stat-item:nth-child(2) { border-right: none; }
-    .services-grid, .projects-grid { grid-template-columns: 1fr; }
-    footer { grid-template-columns: 1fr; text-align: center; padding: 32px 24px; }
-    .footer-right { text-align: center; }
   }
 </style>
 </head>
@@ -717,6 +658,9 @@
     <div class="nav-name">SABER<span>NW</span></div>
     <div class="nav-sub">High Hazard Consulting</div>
   </div>
+  <button class="nav-toggle" onclick="toggleNav()" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
   <ul class="nav-links">
     <li><a href="#mission">Mission</a></li>
     <li><a href="#services">Services</a></li>
@@ -725,6 +669,15 @@
     <li><a href="#contact">Contact</a></li>
   </ul>
 </nav>
+
+<!-- MOBILE NAV DRAWER -->
+<div class="nav-drawer" id="navDrawer">
+  <a href="#mission" onclick="closeNav()">Mission</a>
+  <a href="#services" onclick="closeNav()">Services</a>
+  <a href="#about" onclick="closeNav()">About</a>
+  <a href="#projects" onclick="Experience">Experience</a>
+  <a href="#contact" onclick="closeNav()">Contact</a>
+</div>
 
 <!-- HERO -->
 <section class="hero">
@@ -736,21 +689,16 @@
       <span>REAL</span><br/>
       <span class="chrome">EXPERTISE.</span>
     </h1>
-    <div class="hero-descriptor">
-      <div class="hero-divider"></div>
-      <div>
-        <p class="hero-tagline">
-          <strong>Most safety consultants have never done the work.</strong><br/>
-          We started as laborers, ran equipment, led crews, and worked every level of demolition and industrial operations before becoming safety leaders. That's the difference.
-        </p>
-        <div class="hero-pills">
-          <span class="pill">Demolition</span>
-          <span class="pill">Environmental</span>
-          <span class="pill">Owner Rep</span>
-          <span class="pill">Safety</span>
-          <span class="pill">High-Risk Work</span>
-        </div>
-      </div>
+    <p class="hero-tagline">
+      <strong>Most safety consultants have never done the work.</strong><br/>
+      We started as laborers, ran equipment, led crews, and worked every level of demolition and industrial operations before becoming safety leaders. That's the difference.
+    </p>
+    <div class="hero-pills">
+      <span class="pill">Demolition</span>
+      <span class="pill">Environmental</span>
+      <span class="pill">Owner Rep</span>
+      <span class="pill">Safety</span>
+      <span class="pill">High-Risk Work</span>
     </div>
     <div class="hero-cta">
       <a href="#services" class="btn-primary">Our Services</a>
@@ -762,22 +710,22 @@
 <!-- TICKER -->
 <div class="ticker" aria-hidden="true">
   <div class="ticker-inner">
-    <span class="ticker-item">Demolition Safety</span><span class="ticker-dot">·</span>
-    <span class="ticker-item">Owner Representation</span><span class="ticker-dot">·</span>
-    <span class="ticker-item">Abatement Oversight</span><span class="ticker-dot">·</span>
-    <span class="ticker-item">High-Risk Work Planning</span><span class="ticker-dot">·</span>
-    <span class="ticker-item">OSHA Compliance</span><span class="ticker-dot">·</span>
-    <span class="ticker-item">Incident Investigation</span><span class="ticker-dot">·</span>
-    <span class="ticker-item">Safety Program Development</span><span class="ticker-dot">·</span>
-    <span class="ticker-item">Field Safety Leadership</span><span class="ticker-dot">·</span>
-    <span class="ticker-item">Demolition Safety</span><span class="ticker-dot">·</span>
-    <span class="ticker-item">Owner Representation</span><span class="ticker-dot">·</span>
-    <span class="ticker-item">Abatement Oversight</span><span class="ticker-dot">·</span>
-    <span class="ticker-item">High-Risk Work Planning</span><span class="ticker-dot">·</span>
-    <span class="ticker-item">OSHA Compliance</span><span class="ticker-dot">·</span>
-    <span class="ticker-item">Incident Investigation</span><span class="ticker-dot">·</span>
-    <span class="ticker-item">Safety Program Development</span><span class="ticker-dot">·</span>
-    <span class="ticker-item">Field Safety Leadership</span><span class="ticker-dot">·</span>
+    <span class="ticker-item">Demolition Safety</span><span class="ticker-sep">·</span>
+    <span class="ticker-item">Owner Representation</span><span class="ticker-sep">·</span>
+    <span class="ticker-item">Abatement Oversight</span><span class="ticker-sep">·</span>
+    <span class="ticker-item">High-Risk Work Planning</span><span class="ticker-sep">·</span>
+    <span class="ticker-item">OSHA Compliance</span><span class="ticker-sep">·</span>
+    <span class="ticker-item">Incident Investigation</span><span class="ticker-sep">·</span>
+    <span class="ticker-item">Safety Program Development</span><span class="ticker-sep">·</span>
+    <span class="ticker-item">Field Safety Leadership</span><span class="ticker-sep">·</span>
+    <span class="ticker-item">Demolition Safety</span><span class="ticker-sep">·</span>
+    <span class="ticker-item">Owner Representation</span><span class="ticker-sep">·</span>
+    <span class="ticker-item">Abatement Oversight</span><span class="ticker-sep">·</span>
+    <span class="ticker-item">High-Risk Work Planning</span><span class="ticker-sep">·</span>
+    <span class="ticker-item">OSHA Compliance</span><span class="ticker-sep">·</span>
+    <span class="ticker-item">Incident Investigation</span><span class="ticker-sep">·</span>
+    <span class="ticker-item">Safety Program Development</span><span class="ticker-sep">·</span>
+    <span class="ticker-item">Field Safety Leadership</span><span class="ticker-sep">·</span>
   </div>
 </div>
 
@@ -819,83 +767,79 @@
 
 <!-- SERVICES -->
 <section class="services" id="services">
-  <div class="services-header">
-    <div>
-      <div class="section-label">What We Do</div>
-      <h2 class="section-title">Built-In Safety.<br/><span class="orange">Not Bolted On.</span></h2>
-    </div>
-    <p class="services-intro">We provide high-level safety and project leadership for demolition, abatement, environmental, and complex industrial work — as an owner's representative, client advocate, or embedded field safety consultant. Wherever the work is, we go.</p>
-  </div>
+  <div class="section-label">What We Do</div>
+  <h2 class="section-title">Built-In Safety.<br/><span class="orange">Not Bolted On.</span></h2>
+  <p class="services-intro">We provide high-level safety and project leadership for demolition, abatement, environmental, and complex industrial work — as an owner's representative, client advocate, or embedded field safety consultant. Wherever the work is, we go.</p>
 
   <div class="services-grid">
     <div class="service-card">
       <div class="service-num">01</div>
       <div class="service-content">
         <div class="service-title">Owner &amp; Client Representation</div>
-        <p class="service-desc">You need someone in your corner who actually understands what's happening on that site — not just what the contractor reports. We serve as your eyes, voice, and protection on demolition and high-risk projects, keeping your interests front and center from pre-construction through closeout.</p>
+        <p class="service-desc">Your eyes, voice, and protection on demolition and high-risk projects. We keep your interests front and center from pre-construction through closeout — someone who actually understands what's happening on that site.</p>
       </div>
     </div>
     <div class="service-card">
       <div class="service-num">02</div>
       <div class="service-content">
         <div class="service-title">Construction &amp; Demolition Safety Oversight</div>
-        <p class="service-desc">Field-present safety leadership for demo and heavy construction projects. We know the machinery, the sequencing, the hazards, and the people doing the work. Real oversight from someone who's been on both sides of the fence.</p>
+        <p class="service-desc">Field-present safety leadership for demo and heavy construction. We know the machinery, the sequencing, the hazards, and the people doing the work. Real oversight from someone who's been on both sides of the fence.</p>
       </div>
     </div>
     <div class="service-card">
       <div class="service-num">03</div>
       <div class="service-content">
         <div class="service-title">Demolition &amp; Abatement Planning Support</div>
-        <p class="service-desc">Pre-demolition hazard reviews, site-specific safety planning, work planning support, and sequencing oversight for complex structural, industrial, and environmental remediation scopes. We understand what's feasible and what isn't — because we've done it.</p>
+        <p class="service-desc">Pre-demolition hazard reviews, site-specific safety planning, and sequencing oversight for complex structural, industrial, and environmental remediation scopes. We understand what's feasible — because we've done it.</p>
       </div>
     </div>
     <div class="service-card">
       <div class="service-num">04</div>
       <div class="service-content">
         <div class="service-title">Site Safety Audits &amp; Field Inspections</div>
-        <p class="service-desc">Unannounced or scheduled field audits that go beyond checklists. We assess real conditions, real behavior, and real risk — then communicate findings in plain language to both field crews and executive leadership.</p>
+        <p class="service-desc">Audits that go beyond checklists. We assess real conditions, real behavior, and real risk — then communicate findings clearly to both field crews and executive leadership.</p>
       </div>
     </div>
     <div class="service-card">
       <div class="service-num">05</div>
       <div class="service-content">
         <div class="service-title">Safety Program Development</div>
-        <p class="service-desc">Programs built around how work actually happens — not templates that gather dust. We develop practical safety systems that field crews can understand, supervisors can enforce, and owners can trust. SOPs, JHAs, site plans, and training frameworks.</p>
+        <p class="service-desc">Programs built around how work actually happens — not templates that gather dust. SOPs, JHAs, site plans, and training frameworks that field crews understand, supervisors enforce, and owners can trust.</p>
       </div>
     </div>
     <div class="service-card">
       <div class="service-num">06</div>
       <div class="service-content">
         <div class="service-title">Incident Investigation &amp; Corrective Action</div>
-        <p class="service-desc">When something goes wrong, you need real answers — not a report written to minimize liability. We conduct thorough root-cause investigations that find what actually happened, protect your organization, and prevent recurrence.</p>
+        <p class="service-desc">Real answers, not reports written to minimize liability. Thorough root-cause investigations that find what actually happened, protect your organization, and prevent recurrence.</p>
       </div>
     </div>
     <div class="service-card">
       <div class="service-num">07</div>
       <div class="service-content">
         <div class="service-title">Regulatory Compliance — OSHA &amp; L&amp;I/WAC</div>
-        <p class="service-desc">Federal OSHA and Washington State L&amp;I/WAC compliance support including citation response, EMR improvement strategy, audit preparation, and client-facing safety narratives. Compliance is the floor — we help you build above it.</p>
+        <p class="service-desc">Federal OSHA and Washington State L&amp;I/WAC compliance support including citation response, EMR improvement strategy, audit preparation, and client-facing safety narratives.</p>
       </div>
     </div>
     <div class="service-card">
       <div class="service-num">08</div>
       <div class="service-content">
         <div class="service-title">Project Risk Management</div>
-        <p class="service-desc">Risk register development, pre-project hazard identification, and ongoing risk monitoring for high-exposure scopes — asbestos, lead, silica, PCBs, confined spaces, crane and critical lifts, fall hazards, and heavy equipment operations.</p>
+        <p class="service-desc">Risk register development and ongoing monitoring for high-exposure scopes — asbestos, lead, silica, PCBs, confined spaces, crane and critical lifts, fall hazards, and heavy equipment operations.</p>
       </div>
     </div>
     <div class="service-card">
       <div class="service-num">09</div>
       <div class="service-content">
         <div class="service-title">Training &amp; Supervisor Coaching</div>
-        <p class="service-desc">Practical training that field supervisors can actually use. We develop and deliver toolbox talks, supervisor leadership training, and hands-on coaching that builds the safety culture from the middle out — where it actually has to live.</p>
+        <p class="service-desc">Practical training that supervisors can actually use. Toolbox talks, leadership coaching, and hands-on development that builds safety culture from the middle out — where it has to live.</p>
       </div>
     </div>
     <div class="service-card">
       <div class="service-num">10</div>
       <div class="service-content">
         <div class="service-title">High-Risk Work Planning</div>
-        <p class="service-desc">Specialized planning support for confined space entry, crane and rigging operations, critical lifts, torch cutting, structural removal, bridge and infrastructure work, and high-reach demolition. Plans that reflect how the work will actually be executed.</p>
+        <p class="service-desc">Specialized planning for confined space entry, crane and rigging, critical lifts, torch cutting, structural removal, bridge and infrastructure work, and high-reach demolition. Plans that reflect how the work will actually be executed.</p>
       </div>
     </div>
   </div>
@@ -913,32 +857,32 @@
       </h2>
       <div class="about-body">
         <p><strong>Saber NW was built on a simple premise:</strong> the best consultant is the one who's been where your workers are standing.</p>
-        <p>David Saber didn't start his career in an office writing safety programs. He started as a <strong>laborer at Envirocon in 2010</strong>, learning demolition, abatement, and environmental remediation from the ground up. He progressed into equipment operation, took on foreman-level responsibility, and moved into the Health and Safety Department around 2015 as a Safety Technician — bringing his field knowledge directly into the safety role.</p>
-        <p>That foundation has defined everything since. Working across industrial, commercial, demolition, abatement, and heavy civil environments, David advanced through safety leadership roles including <strong>Regional Health &amp; Safety Manager</strong> and ultimately <strong>Director of Health &amp; Safety</strong> — overseeing company safety programs, audits, incident investigations, claims management, regulatory compliance, and supervisor development at scale.</p>
+        <p>David Saber didn't start his career in an office writing safety programs. He started as a <strong>laborer at Envirocon in 2010</strong>, learning demolition, abatement, and environmental remediation from the ground up — progressing into equipment operation, foreman-level responsibility, and eventually into the Health and Safety Department as a Safety Technician around 2015.</p>
+        <p>That foundation defined everything since. Working across industrial, commercial, demolition, abatement, and heavy civil environments, David advanced through safety leadership roles including <strong>Regional Health &amp; Safety Manager</strong> and ultimately <strong>Director of Health &amp; Safety</strong> — overseeing company safety programs, audits, incident investigations, regulatory compliance, and supervisor development at scale.</p>
         <p>Saber NW is the next chapter: <strong>bringing that full-spectrum experience directly to owners, clients, and project teams</strong> who need real oversight, not a clipboard consultant who's never touched the work.</p>
         <p>Saber NW is a <strong>Washington State Women and Minority-Owned business</strong>, built to deliver elite safety and project leadership wherever the work demands it.</p>
       </div>
       <div class="about-badge">
         <div class="about-badge-dot"></div>
-        <div class="about-badge-text">WA Certified Women &amp; Minority-Owned Business — OMWBE Pending</div>
+        <div class="about-badge-text">WA Certified Women &amp; Minority-Owned<br/>OMWBE Certification Pending</div>
       </div>
     </div>
 
-    <div>
+    <div class="career-section">
       <div class="career-label">Career Progression</div>
       <div class="career-list">
         <div class="career-item">
           <div class="career-dot-wrap"><div class="c-dot"></div><div class="c-line"></div></div>
           <div>
             <div class="career-role">Laborer</div>
-            <div class="career-detail">Envirocon · 2010 — Started in demo and abatement from the ground up</div>
+            <div class="career-detail">Envirocon · 2010 — Demo and abatement from the ground up</div>
           </div>
         </div>
         <div class="career-item">
           <div class="career-dot-wrap"><div class="c-dot"></div><div class="c-line"></div></div>
           <div>
             <div class="career-role">Equipment Operator</div>
-            <div class="career-detail">Envirocon — Hands-on heavy equipment and field operations</div>
+            <div class="career-detail">Envirocon — Heavy equipment and field operations</div>
           </div>
         </div>
         <div class="career-item">
@@ -951,22 +895,22 @@
         <div class="career-item">
           <div class="career-dot-wrap"><div class="c-dot"></div><div class="c-line"></div></div>
           <div>
-            <div class="career-role">Health &amp; Safety Technician</div>
-            <div class="career-detail">Envirocon · 2015/2016 — Field credibility meets safety discipline</div>
+            <div class="career-role">H&amp;S Technician</div>
+            <div class="career-detail">Envirocon · 2015 — Field credibility meets safety discipline</div>
           </div>
         </div>
         <div class="career-item">
           <div class="career-dot-wrap"><div class="c-dot"></div><div class="c-line"></div></div>
           <div>
             <div class="career-role">Regional H&amp;S Manager</div>
-            <div class="career-detail">Northstar — Regional safety leadership across complex operations</div>
+            <div class="career-detail">Northstar — Regional leadership across complex operations</div>
           </div>
         </div>
         <div class="career-item">
           <div class="career-dot-wrap"><div class="c-dot"></div><div class="c-line"></div></div>
           <div>
             <div class="career-role">Director of Health &amp; Safety</div>
-            <div class="career-detail">Executive-level safety leadership — strategy, culture, and compliance</div>
+            <div class="career-detail">Executive safety leadership — strategy, culture, compliance</div>
           </div>
         </div>
         <div class="career-item current">
@@ -983,20 +927,18 @@
 
 <!-- PROJECTS -->
 <section class="projects" id="projects">
-  <div class="projects-header">
-    <div class="section-label">Field Experience</div>
-    <h2 class="section-title">Projects &amp;<br/><span class="orange">Industries.</span></h2>
-  </div>
+  <div class="section-label">Field Experience</div>
+  <h2 class="section-title">Projects &amp;<br/><span class="orange">Industries.</span></h2>
   <div class="projects-grid">
     <div class="project-card">
       <div class="project-type">Healthcare · Structural Demo</div>
       <div class="project-name">Harrison Hospital Demolition</div>
-      <p class="project-desc">Complex structural demolition of hospital facility in Bremerton, WA. High-hazard materials, occupied adjacent structures, and critical sequencing requirements.</p>
+      <p class="project-desc">Complex structural demolition in Bremerton, WA. High-hazard materials, occupied adjacent structures, and critical sequencing requirements.</p>
     </div>
     <div class="project-card">
       <div class="project-type">Higher Education · Renovation</div>
       <div class="project-name">UW Anderson Hall</div>
-      <p class="project-desc">University of Washington renovation scope involving abatement, demolition, and safety oversight on a sensitive occupied campus environment.</p>
+      <p class="project-desc">University of Washington renovation involving abatement, demolition, and safety oversight on a sensitive occupied campus environment.</p>
     </div>
     <div class="project-card">
       <div class="project-type">Infrastructure · Bridge Demo</div>
@@ -1005,18 +947,18 @@
     </div>
     <div class="project-card">
       <div class="project-type">Industrial · Environmental</div>
-      <div class="project-name">Morel Meadows</div>
-      <p class="project-desc">Industrial environmental remediation project in Lacey, WA. Hazardous materials coordination, field safety leadership, and regulatory compliance.</p>
+      <div class="project-name">Morel Meadows — Lacey, WA</div>
+      <p class="project-desc">Industrial environmental remediation. Hazardous materials coordination, field safety leadership, and regulatory compliance.</p>
     </div>
     <div class="project-card">
       <div class="project-type">Industrial · Wastewater</div>
       <div class="project-name">Wastewater &amp; Tank Facilities</div>
-      <p class="project-desc">Confined space, tank entry, and decommissioning work across multiple water and wastewater facility projects. Specialized high-risk work planning and execution oversight.</p>
+      <p class="project-desc">Confined space, tank entry, and decommissioning work across multiple water and wastewater facilities. Specialized high-risk work planning and execution oversight.</p>
     </div>
     <div class="project-card">
       <div class="project-type">Multi-Sector Experience</div>
       <div class="project-name">Additional Industry Experience</div>
-      <p class="project-desc">Commercial renovation, school district projects, industrial abatement, bridge and infrastructure work, heavy civil, and environmental remediation across the Pacific Northwest and beyond.</p>
+      <p class="project-desc">Commercial renovation, school districts, industrial abatement, bridge and infrastructure, heavy civil, and environmental remediation across the Pacific Northwest and beyond.</p>
     </div>
   </div>
 </section>
@@ -1035,11 +977,9 @@
   <div>
     <div class="section-label">Get In Touch</div>
     <h2 class="contact-headline">
-      Let's Talk<br/>
-      About Your<br/>
-      <span class="orange">Project.</span>
+      Let's Talk<br/>About Your<br/><span class="orange">Project.</span>
     </h2>
-    <p class="contact-sub">Whether you need an owner's rep on a complex demo project, a safety program built from scratch, embedded field leadership, or just want to understand what real high-hazard consulting looks like — reach out. We work wherever the project is.</p>
+    <p class="contact-sub">Whether you need an owner's rep on a complex demo project, a safety program built from scratch, embedded field leadership, or want to understand what real high-hazard consulting looks like — reach out. We work wherever the project is.</p>
     <div class="contact-tags">
       <div class="contact-tag">
         <div class="contact-tag-label">Based</div>
@@ -1059,20 +999,18 @@
       </div>
     </div>
   </div>
-  <div>
-    <div class="form">
-      <div class="form-row">
-        <input class="form-input" type="text" placeholder="First Name"/>
-        <input class="form-input" type="text" placeholder="Last Name"/>
-      </div>
-      <input class="form-input" type="text" placeholder="Company / Organization"/>
-      <input class="form-input" type="text" placeholder="Your Role / Title"/>
-      <input class="form-input" type="email" placeholder="Email Address"/>
-      <input class="form-input" type="text" placeholder="Project Type (Demo, Owner Rep, Safety, Other)"/>
-      <textarea class="form-input" placeholder="Tell us about your project, timeline, and what you need..."></textarea>
-      <button class="btn-primary" style="width:100%;text-align:center;padding:18px;">Send Message</button>
-      <p class="form-note">We typically respond within one business day.</p>
+  <div class="form">
+    <div class="form-row">
+      <input class="form-input" type="text" placeholder="First Name"/>
+      <input class="form-input" type="text" placeholder="Last Name"/>
     </div>
+    <input class="form-input" type="text" placeholder="Company / Organization"/>
+    <input class="form-input" type="text" placeholder="Your Role / Title"/>
+    <input class="form-input" type="email" placeholder="Email Address"/>
+    <input class="form-input" type="text" placeholder="Project Type"/>
+    <textarea class="form-input" placeholder="Tell us about your project, timeline, and what you need..."></textarea>
+    <button class="btn-primary" style="width:100%;text-align:center;padding:18px;">Send Message</button>
+    <p class="form-note">We typically respond within one business day.</p>
   </div>
 </section>
 
@@ -1080,12 +1018,25 @@
 <footer>
   <div class="footer-brand">SABER<span>NW</span></div>
   <div class="footer-center">© 2026 Saber NW LLC · Washington State · sabernw.com</div>
-  <div class="footer-right">
-    Women &amp; Minority Owned Business<br/>
-    Demolition · Environmental · Safety
-  </div>
+  <div class="footer-right">Women &amp; Minority Owned Business<br/>Demolition · Environmental · Safety</div>
 </footer>
+
+<script>
+  function toggleNav() {
+    document.getElementById('navDrawer').classList.toggle('open');
+  }
+  function closeNav() {
+    document.getElementById('navDrawer').classList.remove('open');
+  }
+  // Close drawer when clicking outside
+  document.addEventListener('click', function(e) {
+    var drawer = document.getElementById('navDrawer');
+    var toggle = document.querySelector('.nav-toggle');
+    if (!drawer.contains(e.target) && !toggle.contains(e.target)) {
+      drawer.classList.remove('open');
+    }
+  });
+</script>
 
 </body>
 </html>
-
